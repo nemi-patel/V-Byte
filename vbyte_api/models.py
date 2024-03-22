@@ -5,6 +5,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import uuid
 from .manager import UserManager
+from django.utils import timezone
+
+
 
 
   
@@ -48,6 +51,9 @@ class Game(models.Model):
     game_name = models.CharField(max_length=100)
     game_details = models.TextField()
     game_image = models.ImageField(upload_to='games/', blank=True, null=True)
+    Student_year = models.CharField(max_length=20, default='2024')
+    #time = models.DateTimeField(auto_now_add=True) 
+    time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.game_name 
@@ -58,3 +64,13 @@ class Usersregistration(models.Model):
     email = models.EmailField(unique=True)
     mobile_number = models.CharField(max_length=15)
     password = models.CharField(max_length=128)     
+
+#game description
+    
+class Rules(models.Model):
+    game_name = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to='games/', blank=True, null=True)
+
+    def __str__(self):
+        return self.game_name

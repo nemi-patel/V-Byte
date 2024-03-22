@@ -3,8 +3,8 @@ import random
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics, status
-from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration
-from .serializers import TeacherSerializer,gamecategorySerializer,StudentSerializer,TimelineSerializer,GameSerializer,UserSerializer
+from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration,Rules
+from .serializers import TeacherSerializer,gamecategorySerializer,StudentSerializer,TimelineSerializer,GameSerializer,UserSerializer,RulesSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -117,3 +117,11 @@ class EmailVerificationView(APIView):
                 student.save()
                 return Response({'detail': 'Email verified successfully'}, status=status.HTTP_200_OK)
         return Response({'detail': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
+
+class RulesListCreate(generics.ListCreateAPIView):
+    queryset = Rules.objects.all()
+    serializer_class = RulesSerializer
+
+class RulesRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Rules.objects.all()
+    serializer_class = RulesSerializer

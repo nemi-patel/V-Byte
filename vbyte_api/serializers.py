@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration
+from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration,Rules
 
 
 
@@ -26,7 +26,7 @@ class TimelineSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ['id', 'game_name', 'game_details', 'game_image']    
+        fields = ['id', 'game_name', 'game_details', 'game_image','student_year','time']    
 
 #userregistration
 class UserSerializer(serializers.ModelSerializer):
@@ -39,3 +39,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class EmailVerificationSerializer(serializers.Serializer):
     otp = serializers.CharField(max_length=6)
+
+
+#game description
+class RulesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rules
+        fields = ['id', 'game_name', 'description', 'image']
+
+
+
