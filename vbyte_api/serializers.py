@@ -26,7 +26,7 @@ class TimelineSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ['id', 'game_name', 'game_details', 'game_image','student_year','time']    
+        fields = ['id', 'game_name', 'game_details', 'game_image','Student_year','time']    
 
 #userregistration
 class UserSerializer(serializers.ModelSerializer):
