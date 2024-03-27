@@ -74,3 +74,23 @@ class Rules(models.Model):
 
     def __str__(self):
         return self.game_name
+    
+#payment
+class Payment(models.Model):
+    PAYMENT_CHOICES = (
+        ('cash', 'Cash'),
+        ('cheque', 'Cheque'),
+        ('online', 'Online'),
+    )
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_CHOICES)
+    cheque_photo = models.ImageField(upload_to='cheque/', blank=True, null=True)    
+
+
+#Form 
+class Form(models.Model):
+    name = models.CharField(max_length=100)
+    college_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15)
+    email = models.EmailField()
+    college_year = models.CharField(max_length=10)
+    address = models.TextField()        

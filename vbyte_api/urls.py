@@ -1,6 +1,11 @@
 from django.urls import path
 from django.contrib import admin
-from .views import EmailVerificationView, StudentLoginView, StudentRegistrationView, TeacherList, TeacherDetail,gamecategory,StudentListCreateAPIView,StudentRetrieveUpdateDestroyAPIView,TimelineListCreateAPIView,TimelineRetrieveUpdateDestroyAPIView,GameListCreateAPIView,GameRetrieveUpdateDestroyAPIView,UserRegistrationAPIView,RulesRetrieveUpdateDestroy,RulesListCreate
+from .views import EmailVerificationView, StudentLoginView, StudentRegistrationView, TeacherList, TeacherDetail,gamecategory,StudentListCreateAPIView,StudentRetrieveUpdateDestroyAPIView,TimelineListCreateAPIView,TimelineRetrieveUpdateDestroyAPIView,GameListCreateAPIView,GameRetrieveUpdateDestroyAPIView,UserRegistrationAPIView,RulesRetrieveUpdateDestroy,RulesListCreate,PaymentListCreateAPIView,PaymentDetailAPIView,FormListCreateAPIView
+from django.conf.urls.static import static
+from django.conf import settings
+from django.views.generic import TemplateView
+
+
 # from vbyte.views import*
 # from .views import regiserAPI
 
@@ -19,8 +24,12 @@ urlpatterns = [
     path('verify-email/', EmailVerificationView.as_view(), name='verify-email'),
     path('rules/', RulesListCreate.as_view(), name='rules-list-create'),
     path('rules/<int:pk>/', RulesRetrieveUpdateDestroy.as_view(), name='rules-retrieve-update-destroy'),
-
-]
+    path('payments/', PaymentListCreateAPIView.as_view(), name='payment-list'),
+    path('payments/<int:pk>/', PaymentDetailAPIView.as_view(), name='payment-detail'),
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('forms/', FormListCreateAPIView.as_view(), name='form-list-create'),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
  
 

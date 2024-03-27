@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration,Rules
+from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration,Rules,Payment,Form
 
 
 
@@ -48,4 +48,14 @@ class RulesSerializer(serializers.ModelSerializer):
         fields = ['id', 'game_name', 'description', 'image']
 
 
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+
+
+class FormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Form
+        fields = '__all__'
 

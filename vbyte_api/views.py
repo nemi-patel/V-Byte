@@ -3,16 +3,14 @@ import random
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics, status
-from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration,Rules
-from .serializers import TeacherSerializer,gamecategorySerializer,StudentSerializer,TimelineSerializer,GameSerializer,UserSerializer,RulesSerializer
+from .models import Teacher,gamecategory,Student,Timeline,Game,Usersregistration,Rules,Payment,Form
+from .serializers import TeacherSerializer,gamecategorySerializer,StudentSerializer,TimelineSerializer,GameSerializer,UserSerializer,RulesSerializer,PaymentSerializer,FormSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.core.mail import send_mail
-from django.conf import settings
 from .models import Student
 from .serializers import StudentSerializer, EmailVerificationSerializer
-
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .serializers import*
 from.emails import*
@@ -125,3 +123,34 @@ class RulesListCreate(generics.ListCreateAPIView):
 class RulesRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rules.objects.all()
     serializer_class = RulesSerializer
+
+
+class PaymentListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            context['request'] = self.request
+        return context
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class PaymentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer    
+
+
+class FormListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Form.objects.all()
+    serializer_class = FormSerializer
+
+    def post(self, request, *args, **kwargs):
+        # Check if the student has already filled two games
+        email = request.data.get('email')
+        if Form.objects.filter(email=email).count() >= 2:
+            return Response({"error": "You can only fill in two games."}, status=status.HTTP_400_BAD_REQUEST)
+        return super().post(request, *args, **kwargs)
+
